@@ -1,0 +1,237 @@
+[gd_scene load_steps=38 format=3 uid="uid://djlo30r4su2m5"]
+
+[ext_resource type="Script" path="res://Mobs/Frog/Frog.gd" id="1_tgw45"]
+[ext_resource type="Texture2D" uid="uid://bw2inr4kohlam" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/enemy-death/enemy-death-1.png" id="1_txm6o"]
+[ext_resource type="Texture2D" uid="uid://t2k6ccx0ps52" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/enemy-death/enemy-death-2.png" id="2_d38uy"]
+[ext_resource type="Texture2D" uid="uid://chi008tese62i" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/aggro/frog-aggro-sheet.png" id="2_epwkk"]
+[ext_resource type="Texture2D" uid="uid://c8nc4qnegaayk" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/enemy-death/enemy-death-3.png" id="3_yjh8q"]
+[ext_resource type="Texture2D" uid="uid://0ypv1clepvyo" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/enemy-death/enemy-death-4.png" id="4_xblbp"]
+[ext_resource type="Texture2D" uid="uid://cvcclvrhnccaj" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/enemy-death/enemy-death-5.png" id="5_jbko8"]
+[ext_resource type="Texture2D" uid="uid://vg1f8s7etn3l" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/enemy-death/enemy-death-6.png" id="6_0nth0"]
+[ext_resource type="Texture2D" uid="uid://cambg8wpni0mg" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-1.png" id="7_3blwb"]
+[ext_resource type="Texture2D" uid="uid://buknrw773byh5" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-2.png" id="8_lb7dn"]
+[ext_resource type="Texture2D" uid="uid://dskwg4ni36nse" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-3.png" id="9_7cybd"]
+[ext_resource type="Texture2D" uid="uid://cu3olywev0bvb" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-4.png" id="10_4r54g"]
+[ext_resource type="Texture2D" uid="uid://c103gi3v5p02s" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/jump/frog-jump-1.png" id="11_0ur20"]
+[ext_resource type="Texture2D" uid="uid://bol7bxi8yhaex" path="res://Assets/Sunny-land-files/Graphical Assets/sprites/frog/jump/frog-jump-2.png" id="12_jej7m"]
+[ext_resource type="Script" path="res://Utils/State Machine.gd" id="15_1cll2"]
+[ext_resource type="Script" path="res://Mobs/Frog/FrogIdle.gd" id="16_bswwk"]
+[ext_resource type="Script" path="res://Mobs/Frog/FrogAggro.gd" id="17_clem4"]
+[ext_resource type="Script" path="res://Mobs/Frog/FrogDeath.gd" id="18_x8yw3"]
+[ext_resource type="AudioStream" uid="uid://7i6cwv0tn1u" path="res://Mobs/Frog/Audio/Death/Explosion1.wav" id="19_1j3j3"]
+[ext_resource type="AudioStream" uid="uid://crs650y82lnxo" path="res://Mobs/Frog/Audio/Death/Explosion2.wav" id="20_w7ub7"]
+[ext_resource type="AudioStream" uid="uid://cwcmae16purur" path="res://Mobs/Frog/Audio/Death/Explosion3.wav" id="21_vnbxa"]
+[ext_resource type="AudioStream" uid="uid://d4kxwiuijijsi" path="res://Mobs/Frog/Audio/Death/Explosion4.wav" id="22_sinxu"]
+[ext_resource type="AudioStream" uid="uid://bvf13lyyt67l0" path="res://Mobs/Frog/Audio/Death/Explosion5.wav" id="23_oqq36"]
+[ext_resource type="AudioStream" uid="uid://bgc45up1capjl" path="res://Mobs/Frog/Audio/Aggro/Aggro.wav" id="24_66c5q"]
+[ext_resource type="AudioStream" uid="uid://gl00ipfdkeoa" path="res://Player/Audio/Player_Jump.wav" id="25_foobp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw0ja"]
+atlas = ExtResource("2_epwkk")
+region = Rect2(0, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4hgo"]
+atlas = ExtResource("2_epwkk")
+region = Rect2(35, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvg3e"]
+atlas = ExtResource("2_epwkk")
+region = Rect2(70, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scvll"]
+atlas = ExtResource("2_epwkk")
+region = Rect2(105, 0, 35, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pyk1v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vw0ja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4hgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvg3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scvll")
+}],
+"loop": false,
+"name": &"Aggro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_txm6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_d38uy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yjh8q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xblbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jbko8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0nth0")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_jej7m")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_3blwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_lb7dn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7cybd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4r54g")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_0ur20")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_adfa4"]
+radius = 3.5
+height = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jtjxc"]
+radius = 81.0062
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fyspa"]
+radius = 6.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qvwv7"]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wromy"]
+random_pitch = 2.2
+random_volume_offset_db = 3.0
+streams_count = 5
+stream_0/stream = ExtResource("19_1j3j3")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("20_w7ub7")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("21_vnbxa")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("22_sinxu")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("23_oqq36")
+stream_4/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_610mc"]
+random_pitch = 2.0
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("24_66c5q")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4pxfv"]
+random_pitch = 2.0
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("25_foobp")
+stream_0/weight = 1.0
+
+[node name="Frog" type="CharacterBody2D" node_paths=PackedStringArray("frogStateMachine", "deathState", "deathAudio")]
+collision_layer = 2
+script = ExtResource("1_tgw45")
+frogStateMachine = NodePath("State Machine")
+deathState = NodePath("State Machine/FrogDeath")
+deathAudio = NodePath("Audio/FrogDeath")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pyk1v")
+animation = &"Death"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7.5)
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_adfa4")
+
+[node name="State Machine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("15_1cll2")
+initial_state = NodePath("FrogIdle")
+
+[node name="FrogIdle" type="Node2D" parent="State Machine" node_paths=PackedStringArray("anim", "frog")]
+script = ExtResource("16_bswwk")
+anim = NodePath("../../AnimatedSprite2D")
+frog = NodePath("../..")
+
+[node name="PlayerDetection" type="Area2D" parent="State Machine/FrogIdle"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="State Machine/FrogIdle/PlayerDetection"]
+shape = SubResource("CircleShape2D_jtjxc")
+
+[node name="FrogAggro" type="Node2D" parent="State Machine" node_paths=PackedStringArray("anim", "frog", "aggroAudio", "jumpAudio")]
+script = ExtResource("17_clem4")
+anim = NodePath("../../AnimatedSprite2D")
+frog = NodePath("../..")
+aggroAudio = NodePath("../../Audio/FrogAggro")
+jumpAudio = NodePath("../../Audio/FrogJump")
+
+[node name="FrogDeath" type="Node2D" parent="State Machine"]
+script = ExtResource("18_x8yw3")
+
+[node name="DamageDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetection"]
+position = Vector2(4.54747e-13, 6)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_fyspa")
+debug_color = Color(0.87451, 0.301961, 0.435294, 0.419608)
+
+[node name="DeathDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathDetection"]
+rotation = 3.14159
+shape = SubResource("CapsuleShape2D_qvwv7")
+debug_color = Color(0.482353, 0.584314, 0.0980392, 0.419608)
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="FrogDeath" type="AudioStreamPlayer" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_wromy")
+volume_db = -13.963
+
+[node name="FrogAggro" type="AudioStreamPlayer2D" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_610mc")
+
+[node name="FrogJump" type="AudioStreamPlayer2D" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_4pxfv")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="State Machine/FrogAggro" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="State Machine/FrogIdle/PlayerDetection" to="State Machine/FrogIdle" method="_on_player_detection_body_entered"]
+[connection signal="body_entered" from="DamageDetection" to="." method="_on_damage_detection_body_entered"]
+[connection signal="body_entered" from="DeathDetection" to="." method="_on_death_detection_body_entered"]

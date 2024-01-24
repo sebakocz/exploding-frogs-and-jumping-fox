@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b0hhihti7m584"
+path="res://.godot/imported/Helium - TrackTribe.mp3-e8475cfbc50804448928fd408b3c2436.mp3str"
+
+[deps]
+
+source_file="res://Game/Helium - TrackTribe.mp3"
+dest_files=["res://.godot/imported/Helium - TrackTribe.mp3-e8475cfbc50804448928fd408b3c2436.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

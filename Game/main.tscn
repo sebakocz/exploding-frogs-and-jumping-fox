@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://br0tha282igwc"]
+
+[ext_resource type="Script" path="res://Game/main.gd" id="1_kgi4d"]
+[ext_resource type="PackedScene" uid="uid://cc15vrlnkv0ge" path="res://Misc/Background/background.tscn" id="2_5hglp"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_kgi4d")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 523.0
+offset_top = 174.0
+offset_right = 620.0
+offset_bottom = 224.0
+scale = Vector2(0.997455, 0.971919)
+text = "Play"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 523.0
+offset_top = 299.0
+offset_right = 620.0
+offset_bottom = 349.0
+scale = Vector2(0.997455, 0.971919)
+text = "Quit"
+
+[node name="Background" parent="." instance=ExtResource("2_5hglp")]
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

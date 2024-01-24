@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://driumqlaa5mcx"]
+
+[ext_resource type="Script" path="res://Game/Debug/DebugOverlay.gd" id="1_0ksci"]
+[ext_resource type="Script" path="res://Game/Debug/SpeedLabel.gd" id="2_3sohq"]
+[ext_resource type="Script" path="res://Game/Debug/InvincibleCheck.gd" id="3_7rwxk"]
+[ext_resource type="Script" path="res://Game/Debug/InfiniteJumpsCheckButton.gd" id="4_kmrke"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eu8vd"]
+bg_color = Color(0.2, 0.2, 0.2, 0.815686)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rsmrs"]
+font_size = 24
+
+[node name="Debug Overlay" type="CanvasLayer" node_paths=PackedStringArray("label_box")]
+process_mode = 3
+script = ExtResource("1_0ksci")
+label_box = NodePath("PanelContainer/MarginContainer/Label Container")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_eu8vd")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Label Container" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Speed Label" type="Label" parent="PanelContainer/MarginContainer/Label Container"]
+layout_mode = 2
+text = "Game Speed: 1"
+label_settings = SubResource("LabelSettings_rsmrs")
+script = ExtResource("2_3sohq")
+
+[node name="GameSpeedSlider" type="HSlider" parent="PanelContainer/MarginContainer/Label Container"]
+layout_mode = 2
+tooltip_text = "Game Speed"
+focus_mode = 0
+max_value = 1.5
+step = 0.1
+value = 1.0
+tick_count = 7
+ticks_on_borders = true
+
+[node name="InvincibleCheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/Label Container" node_paths=PackedStringArray("debug_overlay")]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "Invincible"
+script = ExtResource("3_7rwxk")
+debug_overlay = NodePath("../../../..")
+
+[node name="InfiniteJumpsCheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/Label Container" node_paths=PackedStringArray("debug_overlay")]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "Infinite Jumps"
+script = ExtResource("4_kmrke")
+debug_overlay = NodePath("../../../..")
+
+[connection signal="value_changed" from="PanelContainer/MarginContainer/Label Container/GameSpeedSlider" to="PanelContainer/MarginContainer/Label Container/Speed Label" method="_on_game_speed_slider_value_changed"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/Label Container/InvincibleCheckButton" to="PanelContainer/MarginContainer/Label Container/InvincibleCheckButton" method="_on_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/Label Container/InfiniteJumpsCheckButton" to="PanelContainer/MarginContainer/Label Container/InfiniteJumpsCheckButton" method="_on_toggled"]
