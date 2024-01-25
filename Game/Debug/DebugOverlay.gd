@@ -1,10 +1,10 @@
 extends CanvasLayer
 class_name DebugOverlay
 
-@export var player : Player
+@export var player: Player
 
-@export var label_box : Control
-	
+@export var label_box: Control
+
 var debug_actions = {
 	"debug_toggle": self.toggle_visibility,
 	"debug_reset": self.reset_scene,
@@ -22,6 +22,7 @@ ESC - Quit
 var status_variables = {}
 
 var status_labels = {}
+
 
 func _ready():
 	# visible only in debug mode
@@ -49,6 +50,7 @@ func _ready():
 	tooltip_label.text = debug_tooltip
 	label_box.add_child(tooltip_label)
 
+
 func _physics_process(_delta):
 	if not OS.is_debug_build():
 		return
@@ -60,9 +62,13 @@ func _physics_process(_delta):
 	update_variables()
 	update_labels()
 
+
 func update_labels():
 	for variable_name in status_variables.keys():
-		status_labels[variable_name].text = "%s: %s" % [variable_name, str(status_variables[variable_name])]
+		status_labels[variable_name].text = (
+			"%s: %s" % [variable_name, str(status_variables[variable_name])]
+		)
+
 
 func update_variables():
 	status_variables["Position"] = player.position.round()
@@ -72,13 +78,15 @@ func update_variables():
 func toggle_visibility():
 	visible = not visible
 
+
 func reset_scene():
 	get_tree().reload_current_scene()
 	Engine.set_time_scale(1)
 
+
 func quit():
 	get_tree().quit()
 
+
 func stop_time():
 	get_tree().paused = not get_tree().paused
-

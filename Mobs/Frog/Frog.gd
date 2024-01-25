@@ -4,11 +4,11 @@ const GROUND_FRICTION = 0.01
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-@export var frogStateMachine : StateMachine
-@export var deathState : State
-@export var deathAudio : AudioStreamPlayer
+@export var frogStateMachine: StateMachine
+@export var deathState: State
+@export var deathAudio: AudioStreamPlayer
 
-@onready var anim = get_node("AnimatedSprite2D")
+@onready var anim = $AnimatedSprite2D
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -19,15 +19,13 @@ func _physics_process(delta):
 	velocity.x = lerp(velocity.x, 0.0, GROUND_FRICTION)
 
 	move_and_slide()
-	
 
-func _on_damage_detection_body_entered(body:Node2D):
+func _on_damage_detection_body_entered(body: Node2D):
 	if body.name == "Player" and anim.animation != "Death":
 		body.damaged()
 
 		# own knockback
-		velocity = Vector2(randf(), -1.0) * 100.0
-
+		velocity = Vector2(randf(), - 1.0) * 100.0
 
 func _on_death_detection_body_entered(body):
 	if body.name == "Player":
@@ -40,14 +38,10 @@ func die():
 	collision_layer = 0
 	collision_mask = 0
 	frogStateMachine.current_state = deathState
-	
-	
+	await anim.animation_finished
+	var mobs = get_parent()
+	if mobs.get_children().size() == 1:
+		get_tree().change_scene_to_file("res://Game/world.tscn")
 
-func _on_animated_sprite_2d_animation_finished():
-	if anim.animation == "Death":
-		var mobs = get_parent()
-		if mobs.get_children().size() == 1:
-			get_tree().change_scene_to_file("res://Game/world.tscn")
-		else:
-			queue_free()
-
+	else:
+		queue_free()

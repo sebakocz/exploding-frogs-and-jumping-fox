@@ -21,9 +21,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("AnimationPlayer")
 @onready var sprite = get_node("AnimatedSprite2D")
 
-
 func _physics_process(delta):
-	# Handle friction.
+	# Handle friction. 
 	if not knocked_back:
 		velocity.x *= GROUND_FRICTION
 
@@ -31,10 +30,12 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		anim.play("Jump")
-		
-	
+
 	# Handle jump.
-	if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_up")) and (is_on_floor() or infinite_jumps):
+	if (
+		(Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_up"))
+		and (is_on_floor() or infinite_jumps)
+	):
 		velocity.y = JUMP_VELOCITY
 		jumpAudio.play()
 
@@ -61,7 +62,6 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-
 func damaged():
 	# reduce health
 	if invincible:
@@ -73,7 +73,7 @@ func damaged():
 	# knock back the player
 	knocked_back = true
 	velocity.y = JUMP_VELOCITY * 0.75
-	velocity.x = -velocity.x * 0.25 + 50 * (1 if sprite.flip_h else -1)
+	velocity.x = -velocity.x * 0.25 + 50 * (1 if sprite.flip_h else - 1)
 
 	# play hurt sound
 	hurtAudio.play()
@@ -81,8 +81,10 @@ func damaged():
 	# flicker the sprite
 	var tween = create_tween()
 	for i in 3:
-		tween.tween_property(self, "modulate", Color.WHITE, .2).from(Color.RED).set_trans(Tween.TRANS_QUAD)
-	
+		tween.tween_property(self, "modulate", Color.WHITE, .2).from(Color.RED).set_trans(
+			Tween.TRANS_QUAD
+		)
+
 	if health == 0:
 		# disable collision, play lose sound -> change scene
 		collision_layer = 0
@@ -91,11 +93,8 @@ func damaged():
 		deathAudio.play()
 		await get_tree().create_timer(1.8).timeout
 		get_tree().change_scene_to_file("res://Game/world.tscn")
+
 	else:
-		tween.tween_callback(on_tween_finished)
-
-
-func on_tween_finished():
-	knocked_back = false
-	invincible = false
-
+		await tween.finished
+		knocked_back = false
+		invincible = false
